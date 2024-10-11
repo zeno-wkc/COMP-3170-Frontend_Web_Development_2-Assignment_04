@@ -16,7 +16,6 @@ function App() {
       const newTaskDefault = {id: tasksData.length ? tasksData[tasksData.length - 1].id + 1 : 1, task: newTask, completed: false};
       setTasksData([...tasksData, newTaskDefault]);
       setNewTask('');
-      // console.log(tasksData);
     }
   };
 

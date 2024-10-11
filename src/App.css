@@ -80,3 +80,7 @@
   text-decoration: line-through;
   color: gray;
 }
+
+.task-checkbox {
+  margin: 0 1rem 0 0;
+}
