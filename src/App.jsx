@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+// import reactLogo from './assets/react.svg';
+// import viteLogo from '/vite.svg';
+import TaskList from './components/TaskList';
+import { initialTasksdata } from './database/initialTasksdata'; 
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tasksData, setTasksData] = useState(initialTasksdata);
+  const [newTask, setNewTask] = useState('');
+  const handleInputChange = (e) => {setNewTask(e.target.value);};
+  
+  const handleSave = (e) => {
+    e.preventDefault();
+    if (newTask.trim()) {
+      const newTaskDefault = {id: tasksData.length ? tasksData[tasksData.length - 1].id + 1 : 1, task: newTask, completed: false};
+      setTasksData([...tasksData, newTaskDefault]);
+      setNewTask('');
+      // console.log(tasksData);
+    }
+  };
+
+  const handleDelete = (taskId) => {
+    setTasksData(prevTasks => prevTasks.filter(task => task.id !== taskId));
+  };
+
+  const handleToggleCheckbox = (taskId) => {
+    setTasksData(prevTasks => prevTasks.map(task => task.id === taskId ? { ...task, completed: !task.completed } : task ));
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <h1>Daily Planner</h1> 
+      </header>
+      <form className='form_container' onSubmit={handleSave}>
+        <input type="text" className='input_box' placeholder="New task ..." value={newTask} onChange={handleInputChange}/>
+        <button type="submit" className='save_btn'>Save</button>
+      </form>
+      <TaskList tasksData={tasksData} onDelete={handleDelete} onToggle={handleToggleCheckbox} />
     </>
   )
 }
 
-export default App
+export default App;
