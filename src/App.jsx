@@ -20,11 +20,11 @@ function App() {
   };
 
   const handleDelete = (taskId) => {
-    setTasksData(prevTasks => prevTasks.filter(task => task.id !== taskId));
+    setTasksData(prevTasksStatus => prevTasksStatus.filter(task => task.id !== taskId));
   };
 
   const handleToggleCheckbox = (taskId) => {
-    setTasksData(prevTasks => prevTasks.map(task => task.id === taskId ? { ...task, completed: !task.completed } : task ));
+    setTasksData(prevTasksStatus => prevTasksStatus.map(task => task.id === taskId ? { ...task, completed: !task.completed } : task ));
   };
 
   return (
