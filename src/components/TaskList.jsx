@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 export default function TaskList({tasksData, onDelete, onToggle}) {
   const tasksNum = tasksData.filter(task => !task.completed).length;
   const tasksList = tasksData.map((tasksItem) => (
